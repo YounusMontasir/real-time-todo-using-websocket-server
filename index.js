@@ -10,11 +10,11 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const socketIO = new Server(server, {
     cors: {
-        origin: "http://localhost:5173",
+        origin: ["http://localhost:5173", "https://realtime-to-do-3ff30.web.app"]
     },
 });
 
-app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
+app.use(cors({ origin: ["http://localhost:5173", "https://realtime-to-do-3ff30.web.app"], credentials: true }));
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.qpmcg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
