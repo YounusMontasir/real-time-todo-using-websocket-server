@@ -52,6 +52,32 @@ async function run() {
             socketIO.sockets.emit("tasks", await todoCollection.find().toArray());
             res.send(result)
         })
+        app.get('/tasks/:id',async(req, res)=>{
+            const id = req.params.id;
+            const query = {_id: new ObjectId(id)}
+            const result = await todoCollection.findOne(query)
+            res.send(result)
+        })
+        app.patch('/tasks/:id', async (req, res) => {
+         
+                const id = req.params.id;
+                const filter = {_id: new ObjectId(id)}
+                const updatedTask = req.body;
+                const updatedDoc ={
+                    $set: {
+                        taskTitle: updatedTask.taskTitle,
+                        taskDescription: updatedTask.taskDescription,
+                    }
+                }
+               const result = await todoCollection.updateOne(filter, updatedDoc)
+        
+               
+        
+                res.send(result);
+            
+        });
+        
+        
 
         console.log("Connected to MongoDB!");
     } catch (error) {
